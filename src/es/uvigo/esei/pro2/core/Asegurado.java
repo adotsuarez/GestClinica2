@@ -33,6 +33,7 @@ public class Asegurado extends Paciente {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
         sb.append("poliza=").append(poliza).append(" - ");
         sb.append("companhia=").append(companhia).append(" - ");
         return sb.toString();

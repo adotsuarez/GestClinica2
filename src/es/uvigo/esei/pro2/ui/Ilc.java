@@ -285,7 +285,17 @@ public class Ilc {
             System.out.print("Indica el tipo de pacientes a listar: (Privado (P) o Asegurados (A)): ");
             info = entrada.nextLine().trim().toUpperCase().charAt(0);
         } while ((info != 'P') && (info != 'A') );
-        
-        coleccion.listarPacientes(info);
+
+        switch (info) {
+            case 'P':
+                for (int i = 0; i < coleccion.privados.length; i++) {
+                    coleccion.privados[i].toString();
+                }
+
+            case 'A':
+                for (int i = 0; i < coleccion.asegurados.length; i++) {
+                    coleccion.asegurados[i].toString();
+                }
+        }
     }
 }

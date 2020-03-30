@@ -37,5 +37,14 @@ public abstract class Paciente extends Persona{
     public void setFechaNacimiento(Fecha fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append("numHistorial=").append(numHistorial).append(" - ");
+        sb.append("fechaNacimiento=").append(fechaNacimiento);
+        return sb.toString();
+    }
 }
 

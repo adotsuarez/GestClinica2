@@ -9,7 +9,8 @@ package es.uvigo.esei.pro2.core;
  * @author nrufino
  */
 public class Clinica {
-    private Paciente[] pacientes;
+    private Privado[] privados;
+    private Asegurado[] asegurados;
     private Medico[] medicos;
     private CitaMedica[] citasMedicas;
 
@@ -64,11 +65,11 @@ public class Clinica {
     /** Inserta un nuevo paciente
      * @param p el nuevo objeto Paciente
      */
-    public void insertaPaciente(Paciente p) throws Exception {
+    public void insertaPaciente(Paciente p) throws Error.Overflow {
         final int maxPacientes = getMaxPacientes();
 
         if ( getNumPacientes() >= maxPacientes ) {
-            throw new Exception("insertaPaciente(): sobrepasa max.: " + getMaxPacientes() );
+            throw new Error.Overflow("Demasiados pacientes");
         }
 
         pacientes[ numPacientes ] = p;
@@ -102,33 +103,6 @@ public class Clinica {
         }
 
         return toret.toString();
-    }
-
-
-    public void toStringPacientesPorTipo(char c) {
-
-
-        for (int i = 0; i < ; i++) {
-            
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append(Persona.toString())
-                .append(Paciente.toString());
-
-        switch (c) {
-            case 'P':
-                StringBuilder sb = new StringBuilder();
-                sb.append()
-                break;
-
-            case 'A':   for (int i = 0; i < numPac; i++) {
-                if ( pacientes[i].getTipo() == Paciente.TipoSeguro.ASEGURADO ){
-                    System.out.println(pacientes[i].toString());
-                }
-            }
-                break;
-        }
-
     }
 
 
@@ -179,8 +153,16 @@ public class Clinica {
     /** Elimina un paciente
      * @param pos la posicion del medico a eliminar
      */
-    public void eliminaMedico(int pos) {
-        medicos [ pos ] = medicos [ --numMedicos ];
+    public void eliminaMedico(int pos) throws Error.YaExisteCita {
+        int i = 0;
+        while (citasMedicas.length != 0 && i < citasMedicas.length && citasMedicas[i].medico != medicos[pos]) {
+            i++;
+        }
+        if (citasMedicas.length != 0 && citasMedicas[i].medico == medicos[pos]) {
+            throw new Error.YaExisteCita("Este medico tiene citas asignadas");
+        } else {
+            medicos [ pos ] = medicos [ --numMedicos ];
+        }
     }
 
     /** Imprime todos los medicos
