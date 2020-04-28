@@ -123,12 +123,12 @@ public class Clinica {
         pacientes [ pos ] = pacientes [ --numPacientes ];
     }
 
-    /** Elimina un paciente
+    /** Comprueba si un paciente tiene citas
      * @param p el paciente a analizar
      */
     private boolean tieneCitasPaciente(Paciente p) {
         int i = 0;
-        while (citasMedicas.length != 0 && i < getNumCitasMedicas() && citasMedicas[i].getPaciente().equals(p)) {
+        while (i < getNumCitasMedicas() && !citasMedicas[i].getPaciente().equals(p)) {
             i++;
         }
 
@@ -214,12 +214,12 @@ public class Clinica {
         medicos [ pos ] = medicos [ --numMedicos ];
     }
 
-    /** Elimina un medico
+    /** Comprueba si un medico tiene citas
      * @param m el medico a analizar
      */
     private boolean tieneCitasMedico(Medico m) {
         int i = 0;
-        while (citasMedicas.length != 0 && i < citasMedicas.length && citasMedicas[i].getMedico().equals(m)) {
+        while (i < getNumCitasMedicas() && !citasMedicas[i].getMedico().equals(m)) {
             i++;
         }
 

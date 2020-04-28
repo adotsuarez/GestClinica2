@@ -24,6 +24,7 @@ public class Medico extends Persona{
     public String toString() {
         final StringBuilder sb = new StringBuilder("Medico{");
         sb.append("numColegiado='").append(numColegiado).append('\'');
+        sb.append(super.toString());
         sb.append('}');
         return sb.toString();
     }

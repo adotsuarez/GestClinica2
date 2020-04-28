@@ -342,6 +342,7 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el paciente
      */
     private void eliminaPaciente(Clinica coleccion) throws Clinica.Inexistente, Clinica.YaExisteCita {
+        visualizaPacientes(coleccion);
         if (coleccion.getNumPacientes() != 0) {
             coleccion.eliminaPaciente(leePosPaciente(coleccion));
         }
@@ -571,6 +572,7 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el medico
      */
     private void eliminaMedico(Clinica coleccion) throws Clinica.Inexistente, Clinica.YaExisteCita {
+        visualizaMedicos(coleccion);
         if (coleccion.getNumMedicos() != 0) {
             coleccion.eliminaMedico(leePosMedico(coleccion));
         }
@@ -685,6 +687,7 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el medico
      */
     private void eliminaCitaMedica(Clinica coleccion) throws Clinica.Inexistente {
+        visualizaCitasMedicas(coleccion);
         if (coleccion.getNumCitasMedicas() != 0) {
             coleccion.eliminaCitaMedica(leePosCitaMedica(coleccion));
         }
@@ -696,7 +699,9 @@ public class Ilc {
      */
     private void modificaCitaMedica(Clinica coleccion) throws Exception {
         visualizaCitasMedicas(coleccion);
-        this.modificaCitaMedica( coleccion.getCitaMedica( leePosCitaMedica( coleccion ) ), coleccion );
+        if (coleccion.getNumCitasMedicas() != 0) {
+            this.modificaCitaMedica(coleccion.getCitaMedica(leePosCitaMedica(coleccion)), coleccion);
+        }
     }
 
     private void modificaCitaMedica(CitaMedica cm, Clinica coleccion) throws Clinica.Inexistente, FaltanElementos {
