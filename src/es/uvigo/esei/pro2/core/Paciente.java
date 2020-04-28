@@ -44,6 +44,8 @@ public abstract class Paciente extends Persona{
         sb.append(super.toString());
         sb.append("numHistorial=").append(numHistorial).append(" - ");
         sb.append("fechaNacimiento=").append(fechaNacimiento);
+
+
         return sb.toString();
     }
 }

@@ -28,4 +28,13 @@ public class Hora {
     public void setMinutos(int minutos) {
         this.minutos = minutos;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Hora{");
+        sb.append("hora=").append(hora);
+        sb.append(", minutos=").append(minutos);
+        sb.append('}');
+        return sb.toString();
+    }
 }

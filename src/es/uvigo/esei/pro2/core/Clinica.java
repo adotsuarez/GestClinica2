@@ -9,8 +9,35 @@ package es.uvigo.esei.pro2.core;
  * @author nrufino
  */
 public class Clinica {
-    private Privado[] privados;
-    private Asegurado[] asegurados;
+
+    // EXCEPCIONES ======
+    public static class General extends Exception {
+        public General(String msg) {
+            super(msg);
+        }
+    }
+
+    public static class Overflow extends General {
+        public Overflow(String msg) {
+            super(msg);
+        }
+    }
+
+    public static class Inexistente extends General {
+        public Inexistente(String msg) {
+            super(msg);
+        }
+    }
+
+    public static class YaExisteCita extends General {
+        public YaExisteCita(String msg) {
+            super(msg);
+        }
+    }
+
+    private String nombreClinica;
+
+    private Paciente[] pacientes;
     private Medico[] medicos;
     private CitaMedica[] citasMedicas;
 
@@ -33,16 +60,23 @@ public class Clinica {
         citasMedicas = new CitaMedica[maxCitasMedicas];
     }
 
+    public String getNombreClinica() {
+        return nombreClinica;
+    }
+
+    public void setNombreClinica(String nombreClinica) {
+        this.nombreClinica = nombreClinica;
+    }
+
     // PACIENTES ======
     /**
      * Devuelve el paciente situado en pos
      * @param pos el lugar del paciente en el vector de pacientes
      * @return el objeto Paciente correspondiente.
      */
-    public Paciente getPaciente(int pos) throws Exception
-    {
+    public Paciente getPaciente(int pos) throws Inexistente {
         if ( pos >= getNumPacientes() ) {
-             throw new Exception ("getPaciente(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxPacientes() );
+            throw new Inexistente ("getPaciente(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxPacientes() );
         }
 
         return pacientes[ pos ];
@@ -65,11 +99,11 @@ public class Clinica {
     /** Inserta un nuevo paciente
      * @param p el nuevo objeto Paciente
      */
-    public void insertaPaciente(Paciente p) throws Error.Overflow {
+    public void insertaPaciente(Paciente p) throws Overflow {
         final int maxPacientes = getMaxPacientes();
 
         if ( getNumPacientes() >= maxPacientes ) {
-            throw new Error.Overflow("Demasiados pacientes");
+            throw new Overflow("Demasiados pacientes");
         }
 
         pacientes[ numPacientes ] = p;
@@ -79,8 +113,26 @@ public class Clinica {
     /** Elimina un paciente
      * @param pos la posicion del paciente a eliminar
      */
-    public void eliminaPaciente(int pos) {
+    public void eliminaPaciente(int pos) throws Inexistente, YaExisteCita {
+        if (pos >= getNumPacientes()) {
+            throw new Inexistente("El paciente no exsite");
+        }
+        if (tieneCitasPaciente(pacientes[pos])) {
+            throw new YaExisteCita("El paciente tiene citas");
+        }
         pacientes [ pos ] = pacientes [ --numPacientes ];
+    }
+
+    /** Elimina un paciente
+     * @param p el paciente a analizar
+     */
+    private boolean tieneCitasPaciente(Paciente p) {
+        int i = 0;
+        while (citasMedicas.length != 0 && i < getNumCitasMedicas() && citasMedicas[i].getPaciente().equals(p)) {
+            i++;
+        }
+
+        return i != this.getNumCitasMedicas();
     }
 
     /** Imprime todos los pacientes
@@ -113,10 +165,9 @@ public class Clinica {
      * @param pos el lugar del medico en el vector de medicos
      * @return el objeto Medico correspondiente.
      */
-    public Medico getMedico(int pos) throws Exception
-    {
+    public Medico getMedico(int pos) throws Inexistente  {
         if ( pos >= getNumPacientes() ) {
-            throw new Exception ("getMedico(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxMedicos() );
+            throw new Inexistente ("getMedico(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxMedicos() );
         }
 
         return medicos[ pos ];
@@ -139,32 +190,41 @@ public class Clinica {
     /** Inserta un nuevo medico
      * @param m el nuevo objeto Medico
      */
-    public void insertaMedico(Medico m) throws Exception {
+    public void insertaMedico(Medico m) throws Overflow {
         final int maxMedicos = getMaxMedicos();
 
         if ( getNumMedicos() >= maxMedicos ) {
-            throw new Exception("insertaMedico(): sobrepasa max.: " + getMaxMedicos() );
+            throw new Overflow ("insertaMedico(): sobrepasa max.: " + getMaxMedicos() );
         }
 
         medicos[ numMedicos ] = m;
         ++numMedicos;
     }
 
-    /** Elimina un paciente
+    /** Elimina un medico
      * @param pos la posicion del medico a eliminar
      */
-    public void eliminaMedico(int pos) throws Error.YaExisteCita {
-        int i = 0;
-        while (citasMedicas.length != 0 && i < citasMedicas.length && citasMedicas[i].medico != medicos[pos]) {
-            i++;
+    public void eliminaMedico(int pos) throws Inexistente, YaExisteCita {
+        if (pos >= getNumMedicos()) {
+            throw new Inexistente("El medico no exsite");
         }
-        if (citasMedicas.length != 0 && citasMedicas[i].medico == medicos[pos]) {
-            throw new Error.YaExisteCita("Este medico tiene citas asignadas");
-        } else {
-            medicos [ pos ] = medicos [ --numMedicos ];
+        if (tieneCitasMedico(medicos[pos])) {
+            throw new YaExisteCita("El medico tiene citas");
         }
+        medicos [ pos ] = medicos [ --numMedicos ];
     }
 
+    /** Elimina un medico
+     * @param m el medico a analizar
+     */
+    private boolean tieneCitasMedico(Medico m) {
+        int i = 0;
+        while (citasMedicas.length != 0 && i < citasMedicas.length && citasMedicas[i].getMedico().equals(m)) {
+            i++;
+        }
+
+        return i != this.getNumCitasMedicas();
+    }
     /** Imprime todos los medicos
      * @return un String con todos los medicos
      */
@@ -194,10 +254,9 @@ public class Clinica {
      * @param pos el lugar de la cita medica en el vector de citasMedicas
      * @return el objeto citaMedica correspondiente.
      */
-    public CitaMedica getCitaMedica(int pos) throws Exception
-    {
-        if ( pos >= getNumPacientes() ) {
-            throw new Exception ("getCitaMedica(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxCitasMedicas() );
+    public CitaMedica getCitaMedica(int pos) throws Inexistente {
+        if ( pos >= getNumCitasMedicas() ) {
+            throw new Inexistente ("getCitaMedica(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxCitasMedicas() );
         }
 
         return citasMedicas[ pos ];
@@ -220,11 +279,11 @@ public class Clinica {
     /** Inserta una nueva cita medica
      * @param cm el nuevo objeto CitaMedica
      */
-    public void insertaCitaMedica(CitaMedica cm) throws Exception {
+    public void insertaCitaMedica(CitaMedica cm) throws Inexistente {
         final int maxCitasMedicas = getMaxCitasMedicas();
 
         if ( getNumCitasMedicas() >= maxCitasMedicas ) {
-            throw new Exception("insertaCitasMedicas(): sobrepasa max.: " + getMaxCitasMedicas() );
+            throw new Inexistente ("insertaCitasMedicas(): sobrepasa max.: " + getMaxCitasMedicas() );
         }
 
         citasMedicas[ numCitasMedicas ] = cm;
@@ -234,8 +293,11 @@ public class Clinica {
     /** Elimina una cita medica
      * @param pos la posicion de la cita medica a eliminar
      */
-    public void eliminaCitaMedica(int pos) {
-        citasMedicas [ pos ] = citasMedicas [ --numMedicos ];
+    public void eliminaCitaMedica(int pos) throws Inexistente {
+        if ( pos >= getNumCitasMedicas() ) {
+            throw new Inexistente ("eliminaCitaMedica(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxCitasMedicas() );
+        }
+        citasMedicas [ pos ] = citasMedicas [ --numCitasMedicas ];
     }
 
     /** Imprime todas las citasMedicas

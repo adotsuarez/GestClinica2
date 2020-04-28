@@ -38,4 +38,14 @@ public class Fecha {
     public void setAnho(int anho) {
         this.anho = anho;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Fecha{");
+        sb.append("dia=").append(dia);
+        sb.append(", mes=").append(mes);
+        sb.append(", anho=").append(anho);
+        sb.append('}');
+        return sb.toString();
+    }
 }
