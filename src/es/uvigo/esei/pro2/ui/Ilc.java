@@ -350,6 +350,7 @@ public class Ilc {
      * @param coleccion La coleccion de la cual modificar un paciente.
      */
     private void modificaPaciente(Clinica coleccion) throws Exception {
+        visualizaPacientes(coleccion);
         this.modificaPaciente( coleccion.getPaciente( leePosPaciente( coleccion ) ) );
     }
 
@@ -574,6 +575,7 @@ public class Ilc {
      * @param coleccion La coleccion de la cual modificar un medico.
      */
     private void modificaMedico(Clinica coleccion) throws Exception {
+        visualizaMedicos(coleccion);
         this.modificaMedico( coleccion.getMedico( leePosMedico( coleccion ) ) );
     }
 
@@ -683,6 +685,7 @@ public class Ilc {
      * @param coleccion La coleccion de la cual modificar un medico.
      */
     private void modificaCitaMedica(Clinica coleccion) throws Exception {
+        visualizaCitasMedicas(coleccion);
         this.modificaCitaMedica( coleccion.getCitaMedica( leePosCitaMedica( coleccion ) ), coleccion );
     }
 
