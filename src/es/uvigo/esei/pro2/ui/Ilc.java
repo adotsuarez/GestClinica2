@@ -184,7 +184,7 @@ public class Ilc {
         int toret;
 
         do {
-            System.out.println("GESTIÓN PACIENTES\n:"
+            System.out.println("GESTIÓN PACIENTES:\n"
                                 + "Número de pacientes: "
                                 + coleccion.getNumPacientes()
                                 + " / " + coleccion.getMaxPacientes());
@@ -211,7 +211,7 @@ public class Ilc {
         int toret;
 
         do {
-            System.out.println("GESTIÓN MÉDICOS\n:");
+            System.out.println("GESTIÓN MÉDICOS:\n");
             System.out.println(
                     "\n1. Inserta un nuevo médicos\n"
                             + "2. Modifica un médicos\n"
@@ -234,7 +234,7 @@ public class Ilc {
         int toret;
 
         do {
-            System.out.println("GESTIÓN CITAS MÉDICAS\n:");
+            System.out.println("GESTIÓN CITAS MÉDICAS:\n");
             System.out.println(
                     "\n1. Inserta una nueva cita médica\n"
                             + "2. Modifica una cita médica\n"
@@ -342,7 +342,9 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el paciente
      */
     private void eliminaPaciente(Clinica coleccion) throws Clinica.Inexistente, Clinica.YaExisteCita {
-        coleccion.eliminaPaciente( leePosPaciente( coleccion ) );
+        if (coleccion.getNumPacientes() != 0) {
+            coleccion.eliminaPaciente(leePosPaciente(coleccion));
+        }
     }
 
     /**
@@ -351,7 +353,9 @@ public class Ilc {
      */
     private void modificaPaciente(Clinica coleccion) throws Exception {
         visualizaPacientes(coleccion);
-        this.modificaPaciente( coleccion.getPaciente( leePosPaciente( coleccion ) ) );
+        if (coleccion.getNumPacientes() != 0) {
+            this.modificaPaciente(coleccion.getPaciente(leePosPaciente(coleccion)));
+        }
     }
 
     private void modificaPaciente(Paciente p) {
@@ -405,7 +409,7 @@ public class Ilc {
                     + p.getFechaNacimiento().getAnho()
                     + "]" );
         }
-        System.out.print( ": " );
+        System.out.println( ": " );
         int dia = leeNum("Nuevo dia: ");
         int mes = leeNum("Nuevo mes: ");
         int ano = leeNum("Nuevo ano: ");
@@ -567,7 +571,9 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el medico
      */
     private void eliminaMedico(Clinica coleccion) throws Clinica.Inexistente, Clinica.YaExisteCita {
-        coleccion.eliminaMedico( leePosMedico( coleccion ) );
+        if (coleccion.getNumMedicos() != 0) {
+            coleccion.eliminaMedico(leePosMedico(coleccion));
+        }
     }
 
     /**
@@ -576,7 +582,9 @@ public class Ilc {
      */
     private void modificaMedico(Clinica coleccion) throws Exception {
         visualizaMedicos(coleccion);
-        this.modificaMedico( coleccion.getMedico( leePosMedico( coleccion ) ) );
+        if (coleccion.getNumMedicos() != 0) {
+            this.modificaMedico(coleccion.getMedico(leePosMedico(coleccion)));
+        }
     }
 
     private void modificaMedico(Medico m) {
@@ -677,7 +685,9 @@ public class Ilc {
      * @param coleccion La coleccion en la que se elimina el medico
      */
     private void eliminaCitaMedica(Clinica coleccion) throws Clinica.Inexistente {
-        coleccion.eliminaCitaMedica( leePosCitaMedica( coleccion ) );
+        if (coleccion.getNumCitasMedicas() != 0) {
+            coleccion.eliminaCitaMedica(leePosCitaMedica(coleccion));
+        }
     }
 
     /**
@@ -702,7 +712,7 @@ public class Ilc {
                     + cm.getFecha().getAnho()
                     + "]" );
         }
-        System.out.print( ": " );
+        System.out.println( ": " );
         int dia = leeNum("Nuevo dia: ");
         int mes = leeNum("Nuevo mes: ");
         int ano = leeNum("Nuevo ano: ");
@@ -719,7 +729,7 @@ public class Ilc {
                     + cm.getFecha().getAnho()
                     + "]" );
         }
-        System.out.print( ": " );
+        System.out.println( ": " );
         int hora = leeNum("Nueva hora: ");
         int minutos = leeNum("Nuevo minutos: ");
         cm.setHora(new Hora(hora,minutos));

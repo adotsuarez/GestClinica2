@@ -166,7 +166,7 @@ public class Clinica {
      * @return el objeto Medico correspondiente.
      */
     public Medico getMedico(int pos) throws Inexistente  {
-        if ( pos >= getNumPacientes() ) {
+        if ( pos >= getNumMedicos() ) {
             throw new Inexistente ("getMedico(): sobrepasa la pos: " + ( pos + 1 ) + " / " + getMaxMedicos() );
         }
 

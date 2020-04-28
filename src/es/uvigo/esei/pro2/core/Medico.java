@@ -19,4 +19,12 @@ public class Medico extends Persona{
     public void setNumColegiado(String numColegiado) {
         this.numColegiado = numColegiado;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Medico{");
+        sb.append("numColegiado='").append(numColegiado).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
