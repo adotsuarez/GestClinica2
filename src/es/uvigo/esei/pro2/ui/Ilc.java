@@ -641,10 +641,10 @@ public class Ilc {
      * @param coleccion El objeto Clinica del que visualizar sus pacientes.
      */
     private void visualizaMedicos(Clinica coleccion) throws Clinica.Inexistente {
-        final int numPacientes = coleccion.getNumPacientes();
+        final int numMedicos = coleccion.getNumMedicos();
 
-        if ( numPacientes > 0 ) {
-            for (int i = 0; i < numPacientes; i++) {
+        if ( numMedicos > 0 ) {
+            for (int i = 0; i < numMedicos; i++) {
                 System.out.print( ( i + 1 ) + ". " );
                 System.out.println( coleccion.getMedico( i ).toString() );
             }
@@ -736,18 +736,18 @@ public class Ilc {
     }
 
     /**
-     * Lee del teclado la posición de un paciente en la colección
+     * Lee del teclado la posición de una cita medica en la colección
      * @param coleccion La colección de la que se obtiene el max.
      * @return la posición del medico, como entero.
      */
     private int leePosCitaMedica(Clinica coleccion) {
-        final int numMedicos = coleccion.getNumMedicos();
+        final int numCitasMedicas = coleccion.getNumCitasMedicas();
         int toret;
 
         do {
-            toret = leeNum( "Introduzca posición de la cita medica (1..." + numMedicos + "): " );
+            toret = leeNum( "Introduzca posición de la cita medica (1..." + numCitasMedicas + "): " );
         } while( toret < 1
-                || toret > numMedicos );
+                || toret > numCitasMedicas );
 
         return toret - 1;
     }
@@ -757,10 +757,10 @@ public class Ilc {
      * @param coleccion El objeto Clinica del que visualizar sus pacientes.
      */
     private void visualizaCitasMedicas(Clinica coleccion) throws Clinica.Inexistente {
-        final int numPacientes = coleccion.getNumPacientes();
+        final int numCitasMedicas = coleccion.getNumCitasMedicas();
 
-        if ( numPacientes > 0 ) {
-            for (int i = 0; i < numPacientes; i++) {
+        if ( numCitasMedicas > 0 ) {
+            for (int i = 0; i < numCitasMedicas; i++) {
                 System.out.print( ( i + 1 ) + ". " );
                 System.out.println( coleccion.getCitaMedica( i ).toString() );
             }
