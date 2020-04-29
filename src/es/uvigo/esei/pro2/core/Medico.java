@@ -22,10 +22,9 @@ public class Medico extends Persona{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Medico{");
-        sb.append("numColegiado='").append(numColegiado).append('\'');
+        final StringBuilder sb = new StringBuilder("Medico\n");
+        sb.append("- Número de Colegiado ").append(numColegiado).append('\n');
         sb.append(super.toString());
-        sb.append('}');
         return sb.toString();
     }
 }

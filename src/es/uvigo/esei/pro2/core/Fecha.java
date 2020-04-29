@@ -41,11 +41,11 @@ public class Fecha {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Fecha{");
-        sb.append("dia=").append(dia);
-        sb.append(", mes=").append(mes);
-        sb.append(", anho=").append(anho);
-        sb.append('}');
+        final StringBuilder sb = new StringBuilder();
+        sb.append(dia);
+        sb.append(" / ").append(mes);
+        sb.append(" / ").append(anho);
+        sb.append('\n');
         return sb.toString();
     }
 }

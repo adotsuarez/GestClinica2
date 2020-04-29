@@ -34,8 +34,8 @@ public class Asegurado extends Paciente {
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("poliza=").append(poliza).append(" - ");
-        sb.append("companhia=").append(companhia).append(" - ");
+        sb.append("- Poliza: ").append(poliza).append('\n');
+        sb.append("- Companhia: ").append(companhia).append('\n');
         return sb.toString();
     }
 }

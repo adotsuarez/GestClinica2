@@ -32,8 +32,8 @@ public abstract class Persona {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("nombre=").append(nombre).append(" - ");
-        sb.append("domicilio=").append(domicilio).append(" - ");
+        sb.append("- Nombre: ").append(nombre).append('\n');
+        sb.append("- Domicilio: ").append(domicilio).append('\n');
         return sb.toString();
     }
 }

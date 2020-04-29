@@ -31,10 +31,10 @@ public class Hora {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Hora{");
-        sb.append("hora=").append(hora);
-        sb.append(", minutos=").append(minutos);
-        sb.append('}');
+        final StringBuilder sb = new StringBuilder();
+        sb.append(hora);
+        sb.append(":").append(minutos);
+        sb.append('\n');
         return sb.toString();
     }
 }

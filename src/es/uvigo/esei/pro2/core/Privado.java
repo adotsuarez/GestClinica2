@@ -24,7 +24,7 @@ public class Privado extends Paciente {
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("dni").append(dni).append(" - ");
+        sb.append("- DNI: ").append(dni).append('\n');
         return sb.toString();
     }
 }

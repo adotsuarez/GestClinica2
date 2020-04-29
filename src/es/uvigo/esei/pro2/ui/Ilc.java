@@ -127,6 +127,9 @@ public class Ilc {
                                         visualizaCitasMedicas( coleccion );
                                         break;
                                     case 5:
+                                        visualizaCitasMedicasExternos(coleccion);
+                                        break;
+                                    case 6:
                                         // VOLVER
                                         break;
                                     default:
@@ -160,6 +163,7 @@ public class Ilc {
      */
     private int menuPrincipal(Clinica coleccion) {
         int toret;
+        System.out.println("\n\n------------------\n\n");
 
         do {
             System.out.println("GESTIÓN CLÍNICA HOSPITALARIA\n");
@@ -182,6 +186,7 @@ public class Ilc {
      */
     private int menuPacientes(Clinica coleccion) {
         int toret;
+        System.out.println("\n\n------------------\n\n");
 
         do {
             System.out.println("GESTIÓN PACIENTES:\n"
@@ -209,6 +214,7 @@ public class Ilc {
      */
     private int menuMedicos(Clinica coleccion) {
         int toret;
+        System.out.println("\n\n------------------\n\n");
 
         do {
             System.out.println("GESTIÓN MÉDICOS:\n");
@@ -232,6 +238,8 @@ public class Ilc {
      */
     private int menuCitasMedicas(Clinica coleccion) {
         int toret;
+        System.out.println("\n\n------------------\n\n");
+
 
         do {
             System.out.println("GESTIÓN CITAS MÉDICAS:\n");
@@ -240,10 +248,11 @@ public class Ilc {
                             + "2. Modifica una cita médica\n"
                             + "3. Elimina una cita médica\n"
                             + "4. Listar citas médicas\n"
-                            + "5. Volver al menu principal\n" );
+                            + "5. Citas médicos externos <EXAMEN>\n"
+                            + "6. Volver al menu principal\n");
             toret = leeNum( "Selecciona: " );
         } while( toret < 1
-                || toret > 5 );
+                || toret > 6 );
 
         System.out.println();
         return toret;
@@ -273,17 +282,17 @@ public class Ilc {
         return toret;
     }
 
-    /**
-     * Lee un caracter del teclado
-     * @param men Mensaje a visualizar
-     * @return el caracter introducido por el usuario
-     */
-    private char leeCaracter(String men) {
-        Scanner teclado = new Scanner (System.in);
-
-        System.out.print(men);
-        return ( teclado.nextLine().trim().charAt(0) );
-    }
+//    /**
+//     * Lee un caracter del teclado
+//     * @param men Mensaje a visualizar
+//     * @return el caracter introducido por el usuario
+//     */
+//    private char leeCaracter(String men) {
+//        Scanner teclado = new Scanner (System.in);
+//
+//        System.out.print(men);
+//        return ( teclado.nextLine().trim().charAt(0) );
+//    }
 
 //    /**
 //     * Lee un String de teclado
@@ -323,7 +332,6 @@ public class Ilc {
             char temp = entrada.nextLine().trim().toUpperCase().charAt(0);
             switch (temp) {
                 case 'P':
-                    p = new Privado("", "", "", new Fecha(0, 0, 0), "");
                     break;
                 case 'A':
                     p = new Asegurado("", "", "", new Fecha(0, 0, 0), "", "");
@@ -525,7 +533,7 @@ public class Ilc {
         Scanner entrada = new Scanner( System.in );
         
         do {
-            System.out.print("Indica el tipo de pacientes a listar: (Privado (P) o Asegurados (A)): ");
+            System.out.print("Indica el tipo de pacientes a listar: (Privado (P) / Asegurados (A)): ");
             info = entrada.nextLine().trim().toUpperCase().charAt(0);
         } while ((info != 'P') && (info != 'A') );
 
@@ -562,6 +570,26 @@ public class Ilc {
      */
     private void insertaMedico(Clinica coleccion) throws Exception {
         Medico m = new Medico("","","");
+        Scanner entrada = new Scanner(System.in);
+
+
+        boolean repetir;
+
+        do {
+            repetir = false;
+            System.out.println("Crear medico externo? Sí (S) / No (N):");
+            char temp = entrada.nextLine().trim().toUpperCase().charAt(0);
+
+            switch (temp) {
+                case 'N':
+                    break;
+                case 'S':
+                    m = new Externo("", "", "", false);
+                    break;
+                default:
+                    repetir = true;
+            }
+        } while (repetir);
 
         modificaMedico( m );
         coleccion.insertaMedico( m );
@@ -627,6 +655,33 @@ public class Ilc {
 
         if ( info.length() > 0 ) {
             m.setDomicilio(info);
+        }
+
+        // Especialidad
+        if (m instanceof Externo) {
+            System.out.print( "Especialidad " );
+            if ( m.getDomicilio().length() > 0 ) {
+                System.out.print( "[" + ((Externo) m).isEspecialidad() + "]" );
+            }
+            System.out.print( " (S) para true / (N) para false: " );
+
+            Scanner entrada = new Scanner(System.in);
+            char temp = entrada.nextLine().trim().toUpperCase().charAt(0);
+            boolean repetir;
+
+            do {
+                repetir = false;
+                switch (temp) {
+                    case 'S':
+                        ((Externo) m).setEspecialidad(true);
+                        break;
+                    case 'N':
+                        ((Externo) m).setEspecialidad(false);
+                        break;
+                    default:
+                        repetir = true;
+                }
+            } while (repetir);
         }
 
     }
@@ -784,6 +839,35 @@ public class Ilc {
             }
         } else {
             System.out.println( "No hay citas médicas." );
+        }
+
+    }
+
+    /**
+     * Visualiza los medicos almacenados en la coleccion por la salida std.
+     * @param coleccion El objeto Clinica del que visualizar sus pacientes.
+     */
+    private void visualizaCitasMedicasExternos(Clinica coleccion) throws Clinica.Inexistente {
+        final int numCitasMedicas = coleccion.getNumCitasMedicas();
+
+        boolean noHayCMExternos = true;
+        if ( numCitasMedicas > 0 ) {
+            for (int i = 0; i < numCitasMedicas; i++) {
+                if (coleccion.getCitaMedica(i).getMedico() instanceof Externo
+                        && !((Externo) coleccion.getCitaMedica(i).getMedico()).isEspecialidad()) {
+                    System.out.println((i + 1)
+                            + ". "
+                            + coleccion.getCitaMedica( i ).toString());
+                    noHayCMExternos = false;
+                }
+            }
+
+            if (noHayCMExternos) {
+                System.out.println( "No hay citas médicas de médicos externos sin especialidad." );
+            }
+
+        } else {
+            System.out.println( "No hay ninguna cita médica." );
         }
 
     }

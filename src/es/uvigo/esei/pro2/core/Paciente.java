@@ -40,10 +40,10 @@ public abstract class Paciente extends Persona{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder("Paciente\n");
         sb.append(super.toString());
-        sb.append("numHistorial=").append(numHistorial).append(" - ");
-        sb.append("fechaNacimiento=").append(fechaNacimiento);
+        sb.append("- Número de Historial: ").append(numHistorial).append('\n');
+        sb.append("- Fecha de nacimiento: ").append(fechaNacimiento);
 
 
         return sb.toString();

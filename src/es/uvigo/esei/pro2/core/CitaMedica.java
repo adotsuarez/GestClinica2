@@ -51,11 +51,11 @@ public class CitaMedica {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CitaMedica{");
-        sb.append("fecha=").append(fecha);
-        sb.append(", hora=").append(hora);
-        sb.append(", medico=").append(medico);
-        sb.append(", paciente=").append(paciente);
+        final StringBuilder sb = new StringBuilder("Cita Médica");
+        sb.append("- Fecha: ").append(fecha);
+        sb.append("- Hora=").append(hora);
+        sb.append("- ").append(medico);
+        sb.append("- ").append(paciente);
         sb.append('}');
         return sb.toString();
     }
