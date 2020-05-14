@@ -4,9 +4,8 @@
 
 package es.uvigo.esei.pro2.core;
 
-/**
- *
- * @author nrufino
+/** Proyecto GESTCLINICA
+ * @author nrufino - Modificaciones por adotsuarez
  */
 public class Clinica {
 

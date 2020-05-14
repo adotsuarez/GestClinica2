@@ -4,6 +4,10 @@ import es.uvigo.esei.pro2.core.*;
 
 import java.util.Scanner;
 
+/** Proyecto GESTCLINICA
+ * @author nrufino - Modificaciones por @adotsuarez
+ */
+
 /**
  * Interfaz de lin. de comando
  */
@@ -503,8 +507,8 @@ public class Ilc {
 
         if ( numPacientes > 0 ) {
             for (int i = 0; i < numPacientes; i++) {
-                System.out.print( ( i + 1 ) + ". " );
-                System.out.println( coleccion.getPaciente( i ).toString() );
+                System.out.print( ( i + 1 ) + ".\n" );
+                System.out.println( coleccion.getPaciente( i ).toString() + '\n');
             }
         } else {
             System.out.println( "No hay pacientes." );
@@ -531,8 +535,9 @@ public class Ilc {
                 for (int i = 0; i < coleccion.getNumPacientes(); i++) {
                     if (coleccion.getPaciente(i) instanceof Privado) {
                         System.out.println((i + 1)
-                                + ". "
-                                + coleccion.getPaciente(i).toString());
+                                + ".\n"
+                                + coleccion.getPaciente(i).toString()
+                                + '\n');
                     }
                 }
                 break;
@@ -541,8 +546,9 @@ public class Ilc {
                 for (int i = 0; i < coleccion.getNumPacientes(); i++) {
                     if (coleccion.getPaciente(i) instanceof Asegurado) {
                         System.out.println((i + 1)
-                                + ". "
-                                + coleccion.getPaciente(i).toString());
+                                + ".\n"
+                                + coleccion.getPaciente(i).toString()
+                                + '\n');
                     }
                 }
                 break;
@@ -573,7 +579,7 @@ public class Ilc {
                 case 'N':
                     break;
                 case 'S':
-                    m = new Externo("", "", "", false);
+                    m = new Externo("", "", "", false, new Fecha(0,0,0));
                     break;
                 default:
                     repetir = true;
@@ -671,6 +677,27 @@ public class Ilc {
                         repetir = true;
                 }
             } while (repetir);
+
+            System.out.print( "Incorporacion " );
+            if ( ((Externo) m).getIncorporacion().getAnho() > 0) {
+                System.out.print( "["
+                        + ((Externo) m).getIncorporacion().getDia()
+                        + " / "
+                        + ((Externo) m).getIncorporacion().getMes()
+                        + " / "
+                        + ((Externo) m).getIncorporacion().getAnho()
+                        + "]" );
+            }
+            System.out.println( ": " );
+            int dia = leeNum("Nuevo dia: ");
+            int mes = leeNum("Nuevo mes: ");
+            int ano = leeNum("Nuevo ano: ");
+
+
+            if ( info.length() > 0 ) {
+                Fecha fi = new Fecha (dia,mes,ano);
+                ((Externo) m).setIncorporacion(fi);
+            }
         }
 
     }
@@ -701,8 +728,8 @@ public class Ilc {
 
         if ( numMedicos > 0 ) {
             for (int i = 0; i < numMedicos; i++) {
-                System.out.print( ( i + 1 ) + ". " );
-                System.out.println( coleccion.getMedico( i ).toString() );
+                System.out.print( ( i + 1 ) + ".\n" );
+                System.out.println( coleccion.getMedico( i ).toString() + '\n');
             }
         } else {
             System.out.println( "No hay médicos." );
@@ -823,8 +850,8 @@ public class Ilc {
 
         if ( numCitasMedicas > 0 ) {
             for (int i = 0; i < numCitasMedicas; i++) {
-                System.out.print( ( i + 1 ) + ". " );
-                System.out.println( coleccion.getCitaMedica( i ).toString() );
+                System.out.print( ( i + 1 ) + ".\n" );
+                System.out.println( coleccion.getCitaMedica( i ).toString() + '\n');
             }
         } else {
             System.out.println( "No hay citas médicas." );
@@ -845,8 +872,9 @@ public class Ilc {
                 if (coleccion.getCitaMedica(i).getMedico() instanceof Externo
                         && !((Externo) coleccion.getCitaMedica(i).getMedico()).isEspecialidad()) {
                     System.out.println((i + 1)
-                            + ". "
-                            + coleccion.getCitaMedica( i ).toString());
+                            + ".\n"
+                            + coleccion.getCitaMedica( i ).toString()
+                            + '\n');
                     noHayCMExternos = false;
                 }
             }
