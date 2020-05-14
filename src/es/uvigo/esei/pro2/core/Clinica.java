@@ -35,6 +35,7 @@ public class Clinica {
         }
     }
 
+    // CODIGO ======
     private String nombreClinica;
 
     private Paciente[] pacientes;
@@ -49,8 +50,11 @@ public class Clinica {
      * @param maxPacientes el num. max. de pacientes, como entero.
      * @param maxMedicos el num. max. de medicos, como entero.
      * @param maxCitasMedicas el num. max. de citas medicas, como entero.
+     * @param nombreClinica nombre de la clinica
      */
-    public Clinica(int maxPacientes, int maxMedicos, int maxCitasMedicas) {
+    public Clinica(int maxPacientes, int maxMedicos, int maxCitasMedicas, String nombreClinica) {
+        this.nombreClinica = nombreClinica;
+
         numPacientes = 0;
         numMedicos = 0;
         numCitasMedicas = 0;

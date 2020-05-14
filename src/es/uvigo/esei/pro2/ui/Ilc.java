@@ -34,10 +34,11 @@ public class Ilc {
         int maxPacientes = leeNum( "Num. max. pacientes: " );
         int maxMedicos = leeNum( "Num. max. medicos: " );
         int maxCitasMedicas = leeNum( "Num. max. citas medicas: " );
+        String nombreClinica = leeString("Nombre de la clinica: ");
 
 
         // Prepara
-        Clinica coleccion = new Clinica(maxPacientes,maxMedicos,maxCitasMedicas);
+        Clinica coleccion = new Clinica(maxPacientes,maxMedicos,maxCitasMedicas, nombreClinica);
 
         // Bucle ppal
         do {
@@ -294,28 +295,28 @@ public class Ilc {
 //        return ( teclado.nextLine().trim().charAt(0) );
 //    }
 
-//    /**
-//     * Lee un String de teclado
-//     * @param msg El mensaje a visualizar
-//     * @return El String
-//     */
-//    private String leeString(String msg)
-//    {
-//        boolean repite;
-//        String toret;
-//        Scanner teclado = new Scanner( System.in );
-//
-//        do {
-//            repite = false;
-//            System.out.print( msg );
-//            toret = teclado.nextLine();
-//            if (toret.length() == 0) {
-//                repite = true;
-//            }
-//        } while( repite );
-//
-//        return toret;
-//    }
+    /**
+     * Lee un String de teclado
+     * @param msg El mensaje a visualizar
+     * @return El String
+     */
+    private String leeString(String msg)
+    {
+        boolean repite;
+        String toret;
+        Scanner teclado = new Scanner( System.in );
+
+        do {
+            repite = false;
+            System.out.print( msg );
+            toret = teclado.nextLine();
+            if (toret.length() == 0) {
+                repite = true;
+            }
+        } while( repite );
+
+        return toret;
+    }
 
     // PACIENTES ======
     /**
@@ -428,18 +429,6 @@ public class Ilc {
             Fecha fn = new Fecha (dia,mes,ano);
             p.setFechaNacimiento(fn);
         }
-
-        // Tipo de atención      
-//        do {
-//            tipoPaciente = leeCaracter("Introduce el tipo de paciente (P: privado, A: asegurado): ");
-//        } while((tipoPaciente != 'P') && (tipoPaciente != 'A') );
-//
-//        switch (tipoPaciente){
-//            case 'P': p.setTipo(Paciente.TipoSeguro.PRIVADO);
-//                      break;
-//            case 'A': p.setTipo(Paciente.TipoSeguro.ASEGURADO);
-//                      break;
-//        }
 
         if (p instanceof Asegurado) {
             Asegurado a = (Asegurado) p;
@@ -687,7 +676,7 @@ public class Ilc {
     }
 
     /**
-     * Lee del teclado la posición de un paciente en la colección
+     * Lee del teclado la posición de un medico en la colección
      * @param coleccion La colección de la que se obtiene el max.
      * @return la posición del medico, como entero.
      */
@@ -811,7 +800,7 @@ public class Ilc {
     /**
      * Lee del teclado la posición de una cita medica en la colección
      * @param coleccion La colección de la que se obtiene el max.
-     * @return la posición del medico, como entero.
+     * @return la posición de la cita medica, como entero.
      */
     private int leePosCitaMedica(Clinica coleccion) {
         final int numCitasMedicas = coleccion.getNumCitasMedicas();
@@ -826,7 +815,7 @@ public class Ilc {
     }
 
     /**
-     * Visualiza los medicos almacenados en la coleccion por la salida std.
+     * Visualiza las citas medicas almacenadas en la coleccion por la salida std.
      * @param coleccion El objeto Clinica del que visualizar sus pacientes.
      */
     private void visualizaCitasMedicas(Clinica coleccion) throws Clinica.Inexistente {
@@ -844,7 +833,7 @@ public class Ilc {
     }
 
     /**
-     * Visualiza los medicos almacenados en la coleccion por la salida std.
+     * Visualiza las citas medicas almacenadas en la coleccion por la salida std.
      * @param coleccion El objeto Clinica del que visualizar sus pacientes.
      */
     private void visualizaCitasMedicasExternos(Clinica coleccion) throws Clinica.Inexistente {
